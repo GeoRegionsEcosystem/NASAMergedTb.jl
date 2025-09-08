@@ -47,13 +47,13 @@ function read(
 
     if raw
         if !isfile(bnc)
-            error("$(modulelog()) - The $(btd.name) Dataset for the $(geo.ID) GeoRegion at Date $dt does not exist at $(bnc).  Check if files exist at $(btd.datapath) or download the files here")
+            error("$(modulelog()) - The $(btd.name) Dataset for the $(geo.ID) GeoRegion at Date $dt does not exist at $(bnc).  Check if files exist at $(btd.path) or download the files here")
         end
         @info "$(modulelog()) - Opening the $(btd.name) NCDataset in the $(geo.ID) GeoRegion for $dt"
     end
     if smooth
         if !isfile(bnc)
-            error("$(modulelog()) - The spatially smoothed ($(@sprintf("%.2f",smoothlon))x$(@sprintf("%.2f",smoothlat))) $(btd.name) Dataset for $(geo.ID) GeoRegion at Date $dt does not exist at $(bnc).  Check if files exist at $(btd.datapath) or download the files here")
+            error("$(modulelog()) - The spatially smoothed ($(@sprintf("%.2f",smoothlon))x$(@sprintf("%.2f",smoothlat))) $(btd.name) Dataset for $(geo.ID) GeoRegion at Date $dt does not exist at $(bnc).  Check if files exist at $(btd.path) or download the files here")
         end
         @info "$(modulelog()) - Opening the spatialtemporally smoothed ($(@sprintf("%.2f",smoothlon))ºx$(@sprintf("%.2f",smoothlat))º, $(@sprintf("%02d",smoothtime)) timesteps) $(btd.name) NCDataset in the $(geo.ID) GeoRegion for $dt"
     end
@@ -88,7 +88,7 @@ function read(
     end
 
     if !isfile(cnc)
-        error("$(modulelog()) - The $(sdd.name) Dataset for the $(geo.ID) GeoRegion at Date $dt does not exist at $(cnc).  Check if files exist at $(sdd.datapath) or download the files here")
+        error("$(modulelog()) - The $(sdd.name) Dataset for the $(geo.ID) GeoRegion at Date $dt does not exist at $(cnc).  Check if files exist at $(sdd.path) or download the files here")
     end
     @info "$(modulelog()) - Opening the $(sdd.name) NCDataset in the $(geo.ID) GeoRegion for $dt"
 
