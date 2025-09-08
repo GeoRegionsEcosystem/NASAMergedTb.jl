@@ -45,7 +45,7 @@ include("classify.jl")
 
 include("save.jl")
 include("read.jl")
-# include("extract.jl")
+include("extract.jl")
 # include("smoothing.jl")
 include("filesystem.jl")
 include("backend.jl")
