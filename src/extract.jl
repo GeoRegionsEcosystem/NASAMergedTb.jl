@@ -25,9 +25,10 @@ function extract(
     in(sgeo,geo)
 
     @info "$(modulelog()) - Retrieving GeoRegion and LandSea Dataset information for the parent GeoRegion of \"$(geo.ID)\", \"$(geo.pID)\""
-    plsd = getLandSea(btd,geo)
-    plon = plsd.lon; nplon = length(plsd.lon)
-    plat = plsd.lat; nplat = length(plsd.lat)
+    plon,plat = btdlonlat()
+    ggrd = RegionGrid(geo,plon,plat)
+    plon = ggrd.lon; nplon = length(plon)
+    plat = ggrd.lat; nplat = length(plat)
 
     @info "$(modulelog()) - Creating RegionGrid for \"$(sgeo.ID)\" based on the longitude and latitude vectors of the parent GeoRegion \"$(geo.pID)\""
 
