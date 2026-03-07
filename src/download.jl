@@ -32,7 +32,7 @@ function download(
 	@info "$(modulelog()) - Preallocating temporary arrays for extraction of $(btd.name) data for the $(geo.name) GeoRegion from the original gridded dataset"
 	glon = ggrd.lon; nglon = length(glon); iglon = ggrd.ilon
 	glat = ggrd.lat; nglat = length(glat); iglat = ggrd.ilat
-	tmp0 = zeros(Float32,nglon,nglat,2)
+	tmp0 = zeros(Int16,nglon,nglat,2)
 	var  = zeros(Float32,nglon,nglat,48)
 	mask = ones(Float32,nglon,nglat,48)
 
