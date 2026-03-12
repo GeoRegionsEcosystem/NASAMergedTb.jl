@@ -8,7 +8,7 @@ CairoMakie.activate!(type = "svg")
 DocMeta.setdocmeta!(NASAMergedTb, :DocTestSetup, :(using GeoRegions); recursive=true)
 
 makedocs(;
-    modules  = [NASAMergedTb],
+    modules  = [GeoRegions,NASAMergedTb],
     authors  = "Nathanael Wong <natgeo.wong@outlook.com>",
     sitename = "NASAMergedTb.jl",
     doctest  = false,
