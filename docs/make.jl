@@ -19,12 +19,12 @@ makedocs(;
     pages=[
         "Home"        => "index.md",
         "The Basics"  => "basics.md",
-        # "Tutorials"  => [
-        #     "Downloading Datasets"        => "tutorials/download.md",
-        #     "Integration with LandSea.jl" => "tutorials/landsea.md",
-        #     "Extraction of subGeoRegions" => "tutorials/extract.md",
-        #     "Spatialtemporal Smoothing"   => "tutorials/smoothing.md",
-        # ],
+        "Tutorials"  => [
+            "Downloading Datasets"        => "using/download.md",
+            "Integration with LandSea.jl" => "using/landsea.md",
+            "Extraction of subGeoRegions" => "using/extract.md",
+            "Spatialtemporal Smoothing"   => "using/smoothing.md",
+        ],
         # "API"       => [
         #     "IMERG Datasets" => "api/imerg.md",
         #     "TRMM Datasets"  => "api/trmm.md",
