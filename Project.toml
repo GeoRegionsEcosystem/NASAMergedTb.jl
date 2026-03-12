@@ -1,7 +1,7 @@
 name = "NASAMergedTb"
 uuid = "0a1892c8-8a22-4bcd-b9e2-a5b491b58d94"
 authors = ["Nathanael Wong <natgeo.wong@outlook.com>"]
-version = "0.2.1"
+version = "0.2.2"
 
 [deps]
 Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
