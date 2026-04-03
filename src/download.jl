@@ -29,7 +29,7 @@ function download(
 	lon,lat = btdlonlat(); nlon = length(lon)
 	ggrd = RegionGrid(geo,lon,lat)
 
-	@info "$(modulelog()) - Preallocating temporary arrays for extraction of $(btd.name) data for the $(geo.name) GeoRegion from the original gridded dataset"
+	@info "$(modulelog()) - Preallocating temporary arrays for extraction of $(btd.name) data for the $(geo.name) GeoRegion from the original gridded dataset"; flush(stderr)
 	glon = ggrd.lon; nglon = length(glon); iglon = ggrd.ilon
 	glat = ggrd.lat; nglat = length(glat); iglat = ggrd.ilat
 	tmp16 = zeros(Int16,nglon,nglat,2)
@@ -41,6 +41,10 @@ function download(
 		shift = true
 		iglon1 = iglon[1] : nlon; niglon1 = length(iglon1)
 		iglon2 = 1 : iglon[end];  niglon2 = length(iglon2)
+		tmp16_1 = @view tmp16[1:niglon1,:,:]
+		tmp16_2 = @view tmp16[niglon1.+(1:niglon2),:,:]
+		tmp32_1 = @view tmp16[1:niglon1,:,:]
+		tmp32_2 = @view tmp16[niglon1.+(1:niglon2),:,:]
 	else
 		shift = false
 		iglon = iglon[1] : iglon[end]
@@ -64,7 +68,7 @@ function download(
 			
 			for it = 1 : 24
 
-				@debug "$(modulelog()) - Loading data into temporary array for timestep $(dyfnc[it])"
+				@debug "$(modulelog()) - Loading data into temporary array for timestep $(dyfnc[it])"; flush(stderr)
 
 				btdfnc = "$(btd.fpref)_$ymdfnc$(@sprintf("%02d",it-1))_$(btd.fsuff)"
 
@@ -80,24 +84,23 @@ function download(
 				
 				if (typeof(ds) <: NCDataset)
 
-					tmp0 = eltype(ds["Tb"].var[:]) <: Float32 ? tmp32 : tmp16
-
 					if !shift
+						tmp0 = eltype(ds["Tb"].var[:]) <: Float32 ? tmp32   : tmp16
 						NCDatasets.load!(ds["Tb"].var,tmp0,iglon,iglat,:)
 					else
-						tmp1 = @view tmp0[1:niglon1,:,:]
-						tmp2 = @view tmp0[niglon1.+(1:niglon2),:,:]
+						tmp1 = eltype(ds["Tb"].var[:]) <: Float32 ? tmp32_1 : tmp16_1
+						tmp2 = eltype(ds["Tb"].var[:]) <: Float32 ? tmp32_2 : tmp16_2
 						NCDatasets.load!(ds["Tb"].var,tmp1,iglon1,iglat,:)
 						NCDatasets.load!(ds["Tb"].var,tmp2,iglon2,iglat,:)
 					end
 					close(ds)
 
-					@debug "$(modulelog()) - Extraction of data from temporary array for the $(geo.name) GeoRegion"
+					@debug "$(modulelog()) - Extraction of data from temporary array for the $(geo.name) GeoRegion"; flush(stderr)
 					for ihr = 1 : 2
 						ii = (it-1)*2+ihr
 						for ilat = 1 : nglat, ilon = 1 : nglon
 							varii = tmp0[ilon,ilat,ihr]
-							if !isnan(ggrd.mask[ilon,ilat])
+							if isnan(ggrd.mask[ilon,ilat])
 								var[ilon,ilat,ii]  = NaN32
 								mask[ilon,ilat,ii] = NaN32
 							elseif varii .> 0
